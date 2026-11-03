@@ -20,8 +20,8 @@ jobs:
         sudo apt update
         sudo apt install aircrack-ng -y
         mkdir -p downloads
-        cd downloads
         mv HANDSHAKE/*.cap downloads/
+        cd downloads
 
         # wget -O capture.cap https://raw.githubusercontent.com/xiv3r/termux-aircrack-ng/refs/heads/main/samples/wpa2.eapol.cap
 
