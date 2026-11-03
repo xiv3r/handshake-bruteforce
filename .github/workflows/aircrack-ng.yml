@@ -1,11 +1,9 @@
-name: Run aircrack-ng
+name: Crack with aircrack-ng
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'HANDSHAKE/*.cap'
+  workflow_dispatch:
+  release:
+    types: [published]  
     
 jobs:
   download-and-release:
@@ -20,15 +18,16 @@ jobs:
         sudo apt update
         sudo apt install aircrack-ng -y
         mkdir -p downloads
-        cp HANDSHAKE/*.cap downloads/
         cd downloads
 
-        # wget -O capture.cap https://raw.githubusercontent.com/xiv3r/termux-aircrack-ng/refs/heads/main/samples/wpa2.eapol.cap
+        # Handshake
+        wget -O capture.cap https://raw.githubusercontent.com/xiv3r/termux-aircrack-ng/refs/heads/main/samples/wpa2.eapol.cap
 
+        # Password
         wget -O passwords.txt https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Passwords/Common-Credentials/100k-most-used-passwords-NCSC.txt
-        
         # wget -O rockyou.txt https://huggingface.co/datasets/Canstralian/Wordlists/resolve/3a6334a4540d446d8f91f4c73401cafbbfe55d22/rockyou.txt?download=true
-        
+
+        # Crack the Key
         aircrack-ng -w passwords.txt capture.cap -l key.log
         
     - name: Determine release tag
