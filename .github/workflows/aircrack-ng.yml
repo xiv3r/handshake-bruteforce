@@ -1,9 +1,11 @@
-name: Crack with ircrack-ng
+name: Run aircrack-ng
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]  
+  push:
+    branches:
+      - main
+    paths:
+      - 'HANDSHAKE/*.cap'
     
 jobs:
   download-and-release:
@@ -19,8 +21,9 @@ jobs:
         sudo apt install aircrack-ng -y
         mkdir -p downloads
         cd downloads
+        mv HANDSHAKE/*.cap downloads/
 
-        wget -O capture.cap https://raw.githubusercontent.com/xiv3r/termux-aircrack-ng/refs/heads/main/samples/wpa2.eapol.cap
+        # wget -O capture.cap https://raw.githubusercontent.com/xiv3r/termux-aircrack-ng/refs/heads/main/samples/wpa2.eapol.cap
 
         wget -O passwords.txt https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Passwords/Common-Credentials/100k-most-used-passwords-NCSC.txt
         
